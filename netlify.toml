@@ -1,11 +1,11 @@
 [build]
-  command = "cd dreamlayer && npm install && npm run build"
-  publish = "dreamlayer/.next"
-  base = "."
+command = "cd dreamlayer && npm install && npm run build"
+publish = "dreamlayer/.next"
+base = "."
 
 [build.environment]
-  NEXT_TELEMETRY_DISABLED = "1"
-  NODE_VERSION = "18.19.0"
+NEXT_TELEMETRY_DISABLED = "1"
+NODE_VERSION = "18.19.0"
 
 [[plugins]]
-  package = "@netlify/plugin-nextjs"
+package = "@netlify/plugin-nextjs"
