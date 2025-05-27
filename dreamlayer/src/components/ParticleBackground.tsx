@@ -27,7 +27,7 @@ class MobileParticleSystem {
 
     private isMobile(): boolean {
         const userAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        const hasTouchPoints = navigator.maxTouchPoints && navigator.maxTouchPoints > 2;
+        const hasTouchPoints = Boolean(navigator.maxTouchPoints && navigator.maxTouchPoints > 2);
         return userAgent || hasTouchPoints;
     }
 
