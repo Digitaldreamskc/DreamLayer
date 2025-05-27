@@ -7,10 +7,10 @@ import {
 } from '@solana/web3.js';
 import { 
   Metaplex, 
-  bundlrStorage,
   walletAdapterIdentity,
   CreateNftInput,
 } from '@metaplex-foundation/js';
+import { bundlrStorage } from '@metaplex-foundation/js-plugin-bundlr-storage';
 import { WalletContextState } from '@solana/wallet-adapter-react';
 import { keccak256 } from 'js-sha3';
 import { 
