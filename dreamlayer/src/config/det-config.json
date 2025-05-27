@@ -1,0 +1,20 @@
+{
+  "collection": {
+    "mint": "GCKYG7KTr8PoKuFhv6nUJ3sjg9ENTBZxT8Cti5GqCyx5",
+    "metadata": "Cb2ijFFk9X1ENLMWMfAA7jFPqTGKDvbdQaDB3BVyPiZY",
+    "masterEdition": "BxCpMfXCC9fxcBjgN8VKPQE9FoAaJFWceTcvQqmwV4C2",
+    "name": "DreamLayer Event Tokens",
+    "symbol": "DET"
+  },
+  "tree": {
+    "address": "3WMMgyswNbLRVKuEtvw8Butf8zEjNFsbYyNBsEuucKgy",
+    "authority": "3bd6Amn5pZtsUWXiHnUFBv3tMhW2r1Jdpm4aqSc46yRw",
+    "creator": "3bd6Amn5pZtsUWXiHnUFBv3tMhW2r1Jdpm4aqSc46yRw",
+    "maxDepth": 18,
+    "maxBufferSize": 64,
+    "maxCapacity": 262144
+  },
+  "network": "https://api.devnet.solana.com",
+  "setupDate": "2025-05-26T17:33:31.007Z",
+  "setupWallet": "3bd6Amn5pZtsUWXiHnUFBv3tMhW2r1Jdpm4aqSc46yRw"
+}
