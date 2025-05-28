@@ -15,25 +15,6 @@ const nextConfig = {
         crypto: false,
       };
     }
-    // Handle styled-jsx
-    config.module.rules.push({
-      test: /\.js$/,
-      include: /node_modules\/styled-jsx/,
-      use: {
-        loader: 'babel-loader',
-        options: {
-          presets: ['next/babel'],
-          plugins: ['styled-jsx/babel']
-        },
-      },
-    });
-    // Ensure styled-jsx is properly resolved
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      'styled-jsx/style': require.resolve('styled-jsx/style'),
-      'styled-jsx/css': require.resolve('styled-jsx/css'),
-      'styled-jsx/server': require.resolve('styled-jsx/server')
-    };
     return config;
   },
   images: {

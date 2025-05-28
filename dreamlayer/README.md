@@ -1,4 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DreamLayer
+
+A Next.js application for managing and interacting with digital assets on the Solana blockchain.
+
+## Features
+
+- Wallet connection and authentication
+- NFT management
+- Digital asset tracking
+- Web3 integration
+
+## Tech Stack
+
+- Next.js 14
+- React 18
+- Solana Web3.js
+- TailwindCSS
+- TypeScript
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
+```
+
+## Deployment
+
+This project is deployed on Vercel.
 
 ## Getting Started
 
