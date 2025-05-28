@@ -27,6 +27,11 @@ const nextConfig = {
         },
       },
     });
+    // Ensure styled-jsx is properly resolved
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'styled-jsx/style': require.resolve('styled-jsx/style')
+    };
     return config;
   },
   images: {
