@@ -10,7 +10,6 @@ import {
   walletAdapterIdentity,
   CreateNftInput,
 } from '@metaplex-foundation/js';
-import { bundlrStorage } from '@metaplex-foundation/js-plugin-bundlr-storage';
 import { WalletContextState } from '@solana/wallet-adapter-react';
 import { keccak256 } from 'js-sha3';
 import { 
@@ -170,17 +169,11 @@ class DETBlockchainService {
 
     const connection = this.getConnection();
     const network = this.getCurrentNetwork();
-    const bundlrEndpoint = solanaConnectionManager.getBundlrEndpoint(network);
 
-    console.log(`🔧 Initializing Metaplex on ${network} with bundlr: ${bundlrEndpoint}`);
+    console.log(`🔧 Initializing Metaplex on ${network}`);
 
     this.metaplex = Metaplex.make(connection)
-      .use(walletAdapterIdentity(wallet))
-      .use(bundlrStorage({
-        address: bundlrEndpoint,
-        providerUrl: connection.rpcEndpoint,
-        timeout: 60000,
-      }));
+      .use(walletAdapterIdentity(wallet));
 
     return this.metaplex;
   }
