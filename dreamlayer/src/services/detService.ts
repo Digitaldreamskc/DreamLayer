@@ -2,7 +2,7 @@
 
 import { useAppKitAccount, useAppKitProvider } from '@reown/appkit/react';
 import { Connection, clusterApiUrl, Keypair } from '@solana/web3.js';
-import { Metaplex, keypairIdentity, bundlrStorage } from '@metaplex-foundation/js';
+import { Metaplex, keypairIdentity } from '@metaplex-foundation/js';
 
 export interface DETEvent {
   id: string;
@@ -64,12 +64,7 @@ class DETService {
   private async initializeMetaplex(walletAdapter: Keypair) {
     if (!this.metaplex) {
       this.metaplex = Metaplex.make(this.connection)
-        .use(keypairIdentity(walletAdapter))
-        .use(bundlrStorage({
-          address: 'https://devnet.bundlr.network',
-          providerUrl: this.connection.rpcEndpoint,
-          timeout: 60000,
-        }));
+        .use(keypairIdentity(walletAdapter));
     }
     return this.metaplex;
   }
