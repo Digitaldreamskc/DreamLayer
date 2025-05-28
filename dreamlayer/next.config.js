@@ -15,7 +15,7 @@ const nextConfig = {
         crypto: false,
       };
     }
-    // Ensure styled-jsx is properly handled
+    // Handle styled-jsx
     config.module.rules.push({
       test: /\.js$/,
       include: /node_modules\/styled-jsx/,
@@ -23,6 +23,7 @@ const nextConfig = {
         loader: 'babel-loader',
         options: {
           presets: ['next/babel'],
+          plugins: ['styled-jsx/babel']
         },
       },
     });
