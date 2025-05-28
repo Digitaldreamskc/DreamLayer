@@ -6,10 +6,16 @@
 [build.environment]
   NEXT_TELEMETRY_DISABLED = "1"
   NODE_VERSION = "20.18.0"
+  NPM_FLAGS = "--legacy-peer-deps"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
 [functions]
   node_bundler = "esbuild"
-  external_node_modules = ["@netlify/plugin-nextjs"] 
+  external_node_modules = ["@netlify/plugin-nextjs", "styled-jsx", "react", "react-dom", "next"]
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200 
