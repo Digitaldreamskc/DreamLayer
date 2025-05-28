@@ -15,7 +15,13 @@
 [functions]
   node_bundler = "esbuild"
   external_node_modules = ["@netlify/plugin-nextjs", "react", "react-dom", "next", "@metaplex-foundation/js", "@solana/web3.js", "@reown/appkit"]
-  included_files = ["node_modules/styled-jsx/**/*", "node_modules/styled-jsx/style.js", "node_modules/styled-jsx/dist/**/*"]
+  included_files = [
+    "node_modules/styled-jsx/**/*",
+    "node_modules/styled-jsx/style.js",
+    "node_modules/styled-jsx/dist/**/*",
+    "node_modules/styled-jsx/css.js",
+    "node_modules/styled-jsx/server.js"
+  ]
 
 [[redirects]]
   from = "/*"

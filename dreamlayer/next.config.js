@@ -30,7 +30,9 @@ const nextConfig = {
     // Ensure styled-jsx is properly resolved
     config.resolve.alias = {
       ...config.resolve.alias,
-      'styled-jsx/style': require.resolve('styled-jsx/style')
+      'styled-jsx/style': require.resolve('styled-jsx/style'),
+      'styled-jsx/css': require.resolve('styled-jsx/css'),
+      'styled-jsx/server': require.resolve('styled-jsx/server')
     };
     return config;
   },
