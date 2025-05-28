@@ -15,6 +15,17 @@ const nextConfig = {
         crypto: false,
       };
     }
+    // Ensure styled-jsx is properly handled
+    config.module.rules.push({
+      test: /\.js$/,
+      include: /node_modules\/styled-jsx/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: ['next/babel'],
+        },
+      },
+    });
     return config;
   },
   images: {
