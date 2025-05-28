@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   experimental: {
+    serverActions: true,
     serverComponentsExternalPackages: ['@solana/web3.js']
   },
   webpack: (config, { isServer }) => {
