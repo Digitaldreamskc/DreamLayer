@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import ConnectWalletButton from './ConnectWalletButton';
 
 const Navbar = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -76,8 +77,12 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Right side - Dark mode toggle and mobile menu */}
+          {/* Right side - Wallet, Dark mode toggle and mobile menu */}
           <div className="flex items-center space-x-4">
+            {/* Wallet Button */}
+            <div className="hidden md:block">
+            <ConnectWalletButton />
+            </div>
             {/* Dark Mode Toggle */}
             <button
               onClick={toggleDarkMode}
@@ -122,6 +127,10 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/95 dark:bg-dark-900/95 backdrop-blur-lg border-t border-gray-200/20 dark:border-dark-700/30">
+            {/* Mobile Wallet Button */}
+            <div className="px-3 py-2 mb-2">
+              <ConnectWalletButton />
+            </div>
             {navLinks.map((link) => (
               <Link
                 key={link.href}

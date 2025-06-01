@@ -1,11 +1,13 @@
 'use client';
 
+import ClientProviders from '@/components/ClientProviders';
 import { ReactNode } from 'react';
 
-export function Providers({ children }: { children: ReactNode }) {
+// A wrapper component that includes all providers
+export default function Providers({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#021027' }}>
+    <ClientProviders>
       {children}
-    </div>
+    </ClientProviders>
   );
 }

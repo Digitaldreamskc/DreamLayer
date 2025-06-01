@@ -1,12 +1,15 @@
-import { mainnet, arbitrum, sepolia } from '@reown/appkit/networks'
-import type { AppKitNetwork } from '@reown/appkit/networks'
+import { mainnet, base } from '@reown/appkit/networks'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 import { createConfig, http } from 'wagmi'
 import { cookieStorage, createStorage } from 'wagmi'
 import type { Chain } from 'viem'
+import { solanaAdapter, solanaNetworks } from './solana'
 
 // Get projectId from https://cloud.reown.com
 export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
+
+// Debug logging
+console.log('Project ID from env:', projectId ? 'Found' : 'Not found')
 
 if (!projectId) {
   console.error('NEXT_PUBLIC_PROJECT_ID is not defined. Please set it in your environment variables.')
@@ -20,8 +23,8 @@ export const metadata = {
   icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 
-// for custom networks visit -> https://docs.reown.com/appkit/react/core/custom-networks
-export const networks: [Chain, ...Chain[]] = [mainnet, arbitrum, sepolia]
+// Define supported EVM networks
+export const evmNetworks: [Chain, ...Chain[]] = [mainnet, base]
 
 // Create Wagmi adapter with proper configuration
 export const wagmiAdapter = new WagmiAdapter({
@@ -30,8 +33,26 @@ export const wagmiAdapter = new WagmiAdapter({
   }),
   ssr: true,
   projectId,
-  networks
+  networks: evmNetworks,
+  features: {
+    analytics: true,
+    socials: ['google', 'x', 'github', 'discord', 'apple'],
+    onramp: true,
+    email: true,
+    emailShowWallets: true
+  }
 })
 
 // Export the Wagmi config
 export const config = wagmiAdapter.wagmiConfig
+
+// Export all adapters and networks
+export const adapters = {
+  wagmi: wagmiAdapter,
+  solana: solanaAdapter
+}
+
+export const networks = {
+  evm: evmNetworks,
+  solana: solanaNetworks
+}

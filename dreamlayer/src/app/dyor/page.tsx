@@ -1,178 +1,80 @@
 'use client';
 
-import { useAppKit, useAppKitAccount } from '@reown/appkit/react';
+import { useAccount } from 'wagmi';
 import Navbar from '@/components/Navbar';
 import ParticleBackground from '@/components/ParticleBackground';
 
 export default function DYORPage() {
-  const { open } = useAppKit();
-  const { isConnected } = useAppKitAccount();
+    const { isConnected } = useAccount();
 
-  const handleConnectWallet = () => {
-    open();
-  };
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-slate-950 via-gray-900 to-slate-950 relative overflow-hidden">
+            <ParticleBackground />
+            <Navbar />
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-gray-900 to-slate-950 relative overflow-hidden">
-      <ParticleBackground />
-      <Navbar />
-      
-      <main className="pt-20 relative z-10">
-        <section className="py-16 px-6">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h1 className="text-7xl md:text-8xl lg:text-9xl font-thin text-white tracking-tight leading-none mb-8">
-                DYOR
-              </h1>
-              <div className="w-32 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent mx-auto animate-pulse mb-8" />
-              <p className="text-xl md:text-2xl text-white/70 font-light max-w-3xl mx-auto leading-relaxed">
-                Master Web3, blockchain, and decentralized technologies through hands-on learning
-              </p>
-              
-              {/* Wallet Connect Section */}
-              {!isConnected && (
-                <div className="mt-8 p-6 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 max-w-md mx-auto">
-                  <p className="text-white/80 mb-4 text-sm">
-                    Connect your wallet to access premium courses and track your learning journey
-                  </p>
-                  <button 
-                    onClick={handleConnectWallet}
-                    className="bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white px-6 py-3 rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
-                  >
-                    Connect Wallet
-                  </button>
-                </div>
-              )}
-            </div>
+            <main className="pt-20 relative z-10">
+                <section className="py-16 px-6">
+                    <div className="max-w-7xl mx-auto">
+                        <div className="text-center mb-16">
+                            <h1 className="text-7xl md:text-8xl lg:text-9xl font-thin text-white tracking-tight leading-none mb-8">
+                                DYOR
+                            </h1>
+                            <div className="w-32 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent mx-auto animate-pulse mb-8" />
+                            <p className="text-xl md:text-2xl text-white/70 font-light max-w-3xl mx-auto leading-relaxed">
+                                Master Web3, blockchain, and decentralized technologies through hands-on learning
+                            </p>
 
-            {/* Course Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {/* Web3 Basics Course */}
-              <div className="bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden">
-                <div className="p-6">
-                  <h3 className="text-2xl font-semibold text-white mb-4">Web3 Fundamentals</h3>
-                  <p className="text-white/60 mb-6">
-                    Learn the core concepts of Web3, blockchain technology, and decentralized applications
-                  </p>
-                  
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center text-sm">
-                      <span className="text-white/40">Duration</span>
-                      <span className="text-white/70">2.5 hours</span>
+                            {!isConnected && (
+                                <div className="mt-8 p-6 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 max-w-md mx-auto">
+                                    <p className="text-white/80 mb-4 text-sm">
+                                        Connect your wallet to access premium courses and track your learning journey
+                                    </p>
+                                    <appkit-button />
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Course Cards */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <div className="bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden">
+                                <div className="p-6">
+                                    <h3 className="text-2xl font-semibold text-white mb-4">Web3 Fundamentals</h3>
+                                    <p className="text-white/60 mb-6">
+                                        Learn the core concepts of Web3, blockchain technology, and decentralized applications
+                                    </p>
+                                    <div className="space-y-3">
+                                        <div className="flex justify-between items-center text-sm">
+                                            <span className="text-white/40">Duration</span>
+                                            <span className="text-white/70">2.5 hours</span>
+                                        </div>
+                                        <div className="flex justify-between items-center text-sm">
+                                            <span className="text-white/40">Lessons</span>
+                                            <span className="text-white/70">12 modules</span>
+                                        </div>
+                                        <div className="flex justify-between items-center text-sm">
+                                            <span className="text-white/40">Progress</span>
+                                            <span className="text-white/70">{isConnected ? '0%' : 'Connect to Start'}</span>
+                                        </div>
+                                    </div>
+                                    <div className="mt-6 w-full bg-white/10 rounded-full h-2 overflow-hidden">
+                                        <div className="h-full bg-gradient-to-r from-green-600 to-emerald-600 transition-all duration-500" style={{ width: isConnected ? '0%' : '0%' }} />
+                                    </div>
+                                    <div className="mt-6">
+                                        <button
+                                            className={`w-full ${isConnected
+                                                ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:opacity-90'
+                                                : 'bg-white/10 border border-white/20 hover:bg-white/20'
+                                                } text-white py-3 rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105`}
+                                        >
+                                            {isConnected ? 'Start Learning' : 'Connect to Begin'}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="flex justify-between items-center text-sm">
-                      <span className="text-white/40">Lessons</span>
-                      <span className="text-white/70">12 modules</span>
-                    </div>
-                    <div className="flex justify-between items-center text-sm">
-                      <span className="text-white/40">Progress</span>
-                      <span className="text-white/70">{isConnected ? '0%' : 'Connect to Start'}</span>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 w-full bg-white/10 rounded-full h-2 overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-green-600 to-emerald-600 transition-all duration-500" style={{ width: isConnected ? '0%' : '0%' }} />
-                  </div>
-
-                  <div className="mt-6">
-                    <button 
-                      onClick={isConnected ? undefined : handleConnectWallet}
-                      className={`w-full ${isConnected 
-                        ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:opacity-90' 
-                        : 'bg-white/10 border border-white/20 hover:bg-white/20'
-                      } text-white py-3 rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105`}
-                    >
-                      {isConnected ? 'Start Learning' : 'Connect to Begin'}
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Blockchain Development Course */}
-              <div className="bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden">
-                <div className="p-6">
-                  <h3 className="text-2xl font-semibold text-white mb-4">Blockchain Development</h3>
-                  <p className="text-white/60 mb-6">
-                    Master smart contract development and blockchain programming
-                  </p>
-                  
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center text-sm">
-                      <span className="text-white/40">Duration</span>
-                      <span className="text-white/70">4 hours</span>
-                    </div>
-                    <div className="flex justify-between items-center text-sm">
-                      <span className="text-white/40">Lessons</span>
-                      <span className="text-white/70">18 modules</span>
-                    </div>
-                    <div className="flex justify-between items-center text-sm">
-                      <span className="text-white/40">Progress</span>
-                      <span className="text-white/70">{isConnected ? '67%' : 'Connect to Continue'}</span>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 w-full bg-white/10 rounded-full h-2 overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-blue-600 to-cyan-600 transition-all duration-500" style={{ width: isConnected ? '67%' : '0%' }} />
-                  </div>
-
-                  <div className="mt-6">
-                    <button 
-                      onClick={isConnected ? undefined : handleConnectWallet}
-                      className={`w-full ${isConnected 
-                        ? 'bg-gradient-to-r from-blue-600 to-cyan-600 hover:opacity-90' 
-                        : 'bg-white/10 border border-white/20 hover:bg-white/20'
-                      } text-white py-3 rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105`}
-                    >
-                      {isConnected ? 'Continue Learning' : 'Connect to Resume'}
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Smart Contracts Course */}
-              <div className="bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden">
-                <div className="p-6">
-                  <h3 className="text-2xl font-semibold text-white mb-4">Smart Contracts</h3>
-                  <p className="text-white/60 mb-6">
-                    Build and deploy secure smart contracts on multiple blockchains
-                  </p>
-                  
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center text-sm">
-                      <span className="text-white/40">Duration</span>
-                      <span className="text-white/70">3 hours</span>
-                    </div>
-                    <div className="flex justify-between items-center text-sm">
-                      <span className="text-white/40">Lessons</span>
-                      <span className="text-white/70">15 modules</span>
-                    </div>
-                    <div className="flex justify-between items-center text-sm">
-                      <span className="text-white/40">Progress</span>
-                      <span className="text-white/70">{isConnected ? '100%' : 'Connect to View'}</span>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 w-full bg-white/10 rounded-full h-2 overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-purple-600 to-pink-600 transition-all duration-500" style={{ width: isConnected ? '100%' : '0%' }} />
-                  </div>
-
-                  <div className="mt-6">
-                    <button 
-                      onClick={isConnected ? undefined : handleConnectWallet}
-                      className={`w-full ${isConnected 
-                        ? 'bg-white/[0.05] border border-white/20' 
-                        : 'bg-white/10 border border-white/20 hover:bg-white/20'
-                      } text-white py-3 rounded-xl font-semibold transition-all duration-300`}
-                    >
-                      {isConnected ? 'View Certificate' : 'Connect to Access'}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-    </div>
-  );
+                </section>
+            </main>
+        </div>
+    );
 }

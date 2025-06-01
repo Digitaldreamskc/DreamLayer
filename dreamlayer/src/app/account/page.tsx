@@ -2,13 +2,14 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAppKitAccount } from '@reown/appkit/react';
+import { useAccount } from 'wagmi';
 import Navbar from '@/components/Navbar';
 import AnimatedBackground from '@/components/AnimatedBackground';
 import AnimatedSection from '@/components/AnimatedSection';
 
 export default function AccountPage() {
-  const { isConnected, address } = useAppKitAccount();
+  const { address, isConnected } = useAccount();
+  const displayAddress = address || 'Not Available';
   const router = useRouter();
 
   useEffect(() => {
@@ -18,13 +19,13 @@ export default function AccountPage() {
     }
   }, [isConnected, router]);
 
-  // Show loading state while checking connection
+  // Show connect wallet prompt if not connected
   if (!isConnected) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-gray-900 to-slate-950 relative overflow-hidden">
         <Navbar />
         <div className="flex items-center justify-center min-h-screen">
-          <div className="text-white text-xl">Please connect your wallet to view your account</div>
+          <div className="text-white text-xl">Please connect your wallet using the button in the navbar to view your account</div>
         </div>
       </div>
     );
@@ -43,7 +44,7 @@ export default function AccountPage() {
             <div className="space-y-6">
               <div>
                 <h2 className="text-xl text-white/80 mb-2">Wallet Address</h2>
-                <p className="text-white/60 font-mono">{address}</p>
+                <p className="text-white/60 font-mono">{displayAddress}</p>
               </div>
               
               <div>

@@ -1,6 +1,8 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Providers from './providers';
+import Navbar from '@/components/Navbar';
 
 export default function HomePage() {
   const router = useRouter();
@@ -11,21 +13,9 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-gray-900 to-slate-950 text-white">
-      {/* Simple Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-xl border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="text-2xl font-bold">DreamLayer</div>
-            <div className="flex gap-6">
-              <button onClick={() => router.push('/events')} className="hover:text-blue-400">Events</button>
-              <button onClick={() => router.push('/dyor')} className="hover:text-green-400">Learn</button>
-              <button onClick={() => router.push('/vision')} className="hover:text-purple-400">Vision</button>
-              <button onClick={() => router.push('/account')} className="hover:text-orange-400">Account</button>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <Providers>
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-gray-900 to-slate-950 text-white">
+        <Navbar />
       
       {/* Main Content */}
       <main className="pt-20 px-6">
@@ -92,6 +82,7 @@ export default function HomePage() {
           </div>
         </div>
       </main>
-    </div>
+      </div>
+    </Providers>
   );
 }
