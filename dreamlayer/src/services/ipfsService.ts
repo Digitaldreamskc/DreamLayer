@@ -1,36 +1,51 @@
-import { Irys } from '@irys/sdk'
+"use client";
+
+import { WebIrys } from '@irys/sdk'
+import { ethers } from 'ethers'
+import { showToast } from '@/utils/toast'
 
 // Initialize Irys client
-const irys = new Irys({
-  url: 'https://node2.irys.xyz',
-  token: 'solana',
-  key: process.env.NEXT_PUBLIC_WEB3_STORAGE_TOKEN || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEVGN0IzRENDNTFiYkZGNjI5N2UxOWVDMUZGRkVDMUMyNDg2QzZmMjkiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2MjY5Njk3OTQ0MzgsIm5hbWUiOiJoYWNrYXRob24tZGVtbyJ9.YuXek1hDmHYfVwKJCYOALkVKe3xH6VjqwY6ifaL4YYU'
-})
+const getIrysClient = async () => {
+  await window.ethereum.request({ method: 'eth_requestAccounts' })
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+
+  const webIrys = new WebIrys({
+    network: 'devnet', // or 'mainnet'
+    token: 'ethereum',
+    wallet: { provider }
+  })
+
+  await webIrys.ready()
+  return webIrys
+}
 
 /**
  * Uploads a file to IPFS using Irys
  * @param file File to upload
  * @returns Object containing CID and URL of the uploaded file
  */
-export async function uploadToIPFS(file: File) {
+export const uploadToIrys = async (file: File): Promise<string> => {
   try {
-    // Upload file to Irys
-    const receipt = await irys.uploadFile(file, {
-      tags: [
-        { name: 'Content-Type', value: file.type },
-        { name: 'File-Name', value: file.name }
-      ]
-    })
+    const formData = new FormData();
+    formData.append('file', file);
 
-    return {
-      cid: receipt.id,
-      url: `https://gateway.irys.xyz/${receipt.id}`,
+    const response = await fetch('/api/upload-to-irys', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to upload to Irys');
     }
+
+    const { url } = await response.json();
+    return url;
+
   } catch (error) {
-    console.error('Failed to upload to IPFS:', error)
-    throw new Error('Failed to upload to IPFS. Please try again.')
+    console.error('Irys upload error:', error);
+    throw error;
   }
-}
+};
 
 /**
  * Uploads JSON metadata to IPFS
@@ -39,6 +54,8 @@ export async function uploadToIPFS(file: File) {
  */
 export async function uploadMetadataToIPFS(metadata: object) {
   try {
+    showToast.info('Uploading', 'Preparing metadata for upload...')
+    
     // Convert metadata to JSON string
     const jsonString = JSON.stringify(metadata)
     
@@ -54,6 +71,8 @@ export async function uploadMetadataToIPFS(metadata: object) {
     return result
   } catch (error) {
     console.error('Failed to upload metadata to IPFS:', error)
-    throw new Error('Failed to upload metadata to IPFS. Please try again.')
+    const errorMessage = error instanceof Error ? error.message : 'Failed to upload metadata to IPFS'
+    showToast.error('Upload Failed', errorMessage)
+    throw new Error(errorMessage)
   }
 }

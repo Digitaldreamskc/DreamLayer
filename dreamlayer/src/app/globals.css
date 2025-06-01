@@ -17,13 +17,3 @@ body {
 h1, h2, h3 {
   font-family: 'Space Grotesk', sans-serif;
 }
-
-/* Manifold Widget Styling */
-.manifold {
-  --manifold-theme--color--primary: hsl(295, 100%, 66%);
-  --manifold-text--font-family--body: 'Inter', sans-serif;
-  --manifold-text--font-family--header: 'Space Grotesk', sans-serif;
-  --manifold-text--color--primary: #ffffff;
-  --manifold-border--radius: 12px;
-  --manifold-page--color--background: #f9f9ff;
-}

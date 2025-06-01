@@ -1,16 +1,22 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useMintNFT } from '@/hooks/useMintNFT';
+import { useNetwork, useSwitchNetwork } from 'wagmi';
 import Navbar from '@/components/Navbar';
 import AnimatedBackground from '@/components/AnimatedBackground';
 import { showToast } from '@/utils/toast';
 import Providers from '../providers';
 
+// Story Protocol Aeneid Testnet Chain ID
+const STORY_CHAIN_ID = 1315;
+
 export default function RegisterMintPage() {
   const router = useRouter();
   const { mint, isLoading, error: mintError } = useMintNFT();
+  const { chain } = useNetwork();
+  const { switchNetwork } = useSwitchNetwork();
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -19,10 +25,38 @@ export default function RegisterMintPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
+  // Check network on mount
+  useEffect(() => {
+    if (chain?.id !== STORY_CHAIN_ID) {
+      showToast.info('Network Required', 'Please switch to Story Protocol Aeneid Testnet');
+    }
+  }, [chain?.id]);
+
   // Handle file selection and preview
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
+      // Validate file size (max 10MB)
+      const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB in bytes
+      if (selectedFile.size > MAX_FILE_SIZE) {
+        showToast.error('File Too Large', 'File size exceeds 10MB limit');
+        return;
+      }
+
+      // Validate file type
+      const allowedTypes = [
+        'image/jpeg',
+        'image/png',
+        'image/gif',
+        'image/svg+xml',
+        'video/mp4',
+        'application/pdf'
+      ];
+      if (!allowedTypes.includes(selectedFile.type)) {
+        showToast.error('Invalid File Type', 'Please upload an image, video, or PDF file');
+        return;
+      }
+
       setFile(selectedFile);
       // Create a preview URL for image files
       if (selectedFile.type.startsWith('image/')) {
@@ -39,9 +73,36 @@ export default function RegisterMintPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate form
     if (!file) {
       setError('Please select a file to upload');
+      showToast.error('Error', 'Please select a file to upload');
       return;
+    }
+
+    if (!title.trim()) {
+      setError('Please enter a title');
+      showToast.error('Error', 'Please enter a title');
+      return;
+    }
+
+    if (!description.trim()) {
+      setError('Please enter a description');
+      showToast.error('Error', 'Please enter a description');
+      return;
+    }
+
+    // Check network
+    if (chain?.id !== STORY_CHAIN_ID) {
+      try {
+        await switchNetwork?.(STORY_CHAIN_ID);
+        showToast.info('Switching Network', 'Please wait while we switch to Story Protocol Aeneid Testnet');
+        return; // Return here as the network switch will trigger a re-render
+      } catch (error) {
+        showToast.error('Network Error', 'Failed to switch network. Please switch manually to Story Protocol Aeneid Testnet');
+        return;
+      }
     }
 
     setError('');
@@ -59,8 +120,8 @@ export default function RegisterMintPage() {
       setFile(null);
       setPreviewUrl(null);
       
-      // Optional: Redirect after success
-      // setTimeout(() => router.push('/vision'), 3000);
+      // Redirect after success
+      setTimeout(() => router.push('/vision'), 3000);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to register IP';
       setError(errorMessage);
@@ -79,6 +140,12 @@ export default function RegisterMintPage() {
           <h1 className="text-5xl font-bold mb-8 text-white text-center">Register & Mint IP</h1>
           
           <div className="max-w-2xl mx-auto bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-3xl p-8">
+            {chain?.id !== STORY_CHAIN_ID && (
+              <div className="mb-6 p-4 rounded-xl bg-yellow-500/20 border border-yellow-500/30 text-yellow-300 text-sm">
+                Please switch to Story Protocol Aeneid Testnet to register your IP
+              </div>
+            )}
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label className="block text-sm font-medium mb-2 text-white">Title</label>
@@ -167,7 +234,7 @@ export default function RegisterMintPage() {
 
               <button 
                 type="submit" 
-                disabled={isLoading}
+                disabled={isLoading || chain?.id !== STORY_CHAIN_ID}
                 className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white py-4 rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
@@ -178,7 +245,7 @@ export default function RegisterMintPage() {
                     </svg>
                     Processing...
                   </div>
-                ) : 'Register & Mint'}
+                ) : chain?.id !== STORY_CHAIN_ID ? 'Switch Network to Continue' : 'Register & Mint'}
               </button>
             </form>
           </div>

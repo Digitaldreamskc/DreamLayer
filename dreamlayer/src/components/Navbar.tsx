@@ -37,6 +37,7 @@ const Navbar = () => {
     { href: '/events', label: 'Events' },
     { href: '/dyor', label: 'DYOR' },
     { href: '/vision', label: 'Vision' },
+    { href: '/nfts', label: 'NFTs' },
     { href: '/account', label: 'Account' },
   ];
 

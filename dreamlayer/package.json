@@ -15,6 +15,10 @@
         "@dynamic-labs/sdk-react-core": "^4.19.2",
         "@dynamic-labs/wagmi-connector": "^4.19.2",
         "@irys/sdk": "0.2.8",
+        "@irys/upload": "^0.0.15",
+        "@irys/upload-ethereum": "^0.0.16",
+        "@lit-protocol/constants": "^7.1.3",
+        "@lit-protocol/lit-node-client": "^7.1.3",
         "@metaplex-foundation/js": "^0.20.1",
         "@metaplex-foundation/mpl-bubblegum": "^5.0.1",
         "@privy-io/react-auth": "^2.9.1",
@@ -36,21 +40,31 @@
         "@supabase/auth-helpers-nextjs": "^0.10.0",
         "@supabase/supabase-js": "^2.49.8",
         "@tanstack/react-query": "^5.77.2",
+        "assert": "^2.1.0",
+        "browserify-zlib": "^0.2.0",
         "bs58": "4.0.1",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "core-js-pure": "^3.42.0",
+        "crypto-browserify": "^3.12.1",
         "dotenv": "^16.5.0",
         "framer-motion": "^12.14.0",
+        "https-browserify": "^1.0.0",
         "js-sha3": "^0.9.3",
         "lucide-react": "^0.511.0",
         "next": "15.3.2",
+        "os-browserify": "^0.3.0",
+        "path-browserify": "^1.0.1",
         "pino-pretty": "^13.0.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
+        "siwe": "^3.0.0",
         "sonner": "^2.0.3",
+        "stream-browserify": "^3.0.0",
+        "stream-http": "^3.2.0",
         "styled-jsx": "5.1.2",
         "tailwind-merge": "^3.3.0",
+        "url": "^0.11.4",
         "viem": "^2.30.5",
         "wagmi": "^2.15.4",
         "web3.storage": "^4.5.5"
@@ -81,6 +95,32 @@
     "overrides": {
         "axios": "^0.30.0",
         "bigint-buffer": "1.1.5",
-        "parse-duration": "^2.1.3"
+        "parse-duration": "^2.1.3",
+        "qrcode.react": "^3.1.0",
+        "react-qr-reader": "^3.0.0-beta-1",
+        "@keystonehq/sdk": {
+            "qrcode.react": "^3.1.0",
+            "react-qr-reader": "^3.0.0-beta-1",
+            "react": "^18.2.0",
+            "react-dom": "^18.2.0"
+        },
+        "@solana/wallet-adapter-wallets": {
+            "@keystonehq/sdk": {
+                "qrcode.react": "^3.1.0",
+                "react-qr-reader": "^3.0.0-beta-1",
+                "react": "^18.2.0",
+                "react-dom": "^18.2.0"
+            }
+        },
+        "@solana/buffer-layout-utils": {
+            "bigint-buffer": "1.1.5"
+        },
+        "@metaplex-foundation/js": {
+            "bigint-buffer": "1.1.5"
+        },
+        "@privy-io/react-auth": {
+            "bigint-buffer": "1.1.5"
+        },
+        "ws": "^8.18.0"
     }
 }
