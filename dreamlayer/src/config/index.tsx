@@ -1,4 +1,4 @@
-import { mainnet, base } from '@reown/appkit/networks'
+import { mainnet, base, solana } from '@reown/appkit/networks'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 import { createConfig, http } from 'wagmi'
 import { cookieStorage, createStorage } from 'wagmi'
@@ -54,5 +54,5 @@ export const adapters = {
 
 export const networks = {
   evm: evmNetworks,
-  solana: solanaNetworks
+  solana: [solana]
 }

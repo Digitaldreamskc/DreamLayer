@@ -1,5 +1,5 @@
 import { SolanaAdapter } from '@reown/appkit-adapter-solana'
-import { solanaDevnet, solanaMainnet } from '@reown/appkit/networks'
+import { solana } from '@reown/appkit/networks'
 import type { AppKitNetwork } from '@reown/appkit/networks'
 
 // Get projectId from https://cloud.reown.com
@@ -18,7 +18,7 @@ export const metadata = {
 }
 
 // Define supported Solana networks
-export const solanaNetworks: [AppKitNetwork, ...AppKitNetwork[]] = [solanaMainnet, solanaDevnet]
+export const solanaNetworks: [AppKitNetwork, ...AppKitNetwork[]] = [solana]
 
 // Create Solana adapter
 export const solanaAdapter = new SolanaAdapter({
