@@ -1,13 +1,25 @@
-'use client';
+﻿"use client";
 
-import ClientProviders from '@/components/ClientProviders';
-import { ReactNode } from 'react';
+import { ThemeProvider } from "next-themes";
+import { WagmiProvider } from "wagmi";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { wagmiAdapter } from "@/config/unifiedAppKitConfig";
 
-// A wrapper component that includes all providers
-export default function Providers({ children }: { children: ReactNode }) {
-  return (
-    <ClientProviders>
-      {children}
-    </ClientProviders>
-  );
+const queryClient = new QueryClient();
+
+export default function Providers({ children }: { children: React.ReactNode }) {
+    return (
+        <WagmiProvider config={wagmiAdapter.wagmiConfig}>
+            <QueryClientProvider client={queryClient}>
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    enableColorScheme={false}
+                >
+                    {children}
+                </ThemeProvider>
+            </QueryClientProvider>
+        </WagmiProvider>
+    );
 }

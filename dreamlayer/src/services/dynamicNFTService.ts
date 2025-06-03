@@ -1,40 +1,6 @@
-import { Uploader } from "@irys/upload"
-import { Ethereum } from "@irys/upload-ethereum"
 import { showToast } from '@/utils/toast'
 import { encryptData, decryptData } from './litService'
 import { updateTokenDataWithProgrammableData, readTokenData } from './programmableDataService'
-
-// Initialize Irys client with proper token support
-const getIrysUploader = async () => {
-  const privateKey = process.env.NEXT_PUBLIC_IRYS_PRIVATE_KEY
-  if (!privateKey) {
-    throw new Error('IRYS_PRIVATE_KEY is not configured. Please add it to your .env.local file')
-  }
-
-  const irysUploader = await Uploader(Ethereum).withWallet(privateKey)
-  return irysUploader
-}
-
-interface DynamicNFTMetadata {
-  name: string
-  description: string
-  image: string
-  attributes: {
-    trait_type: string
-    value: string | number
-  }[]
-  properties: {
-    files: {
-      uri: string
-      type: string
-    }[]
-    category: string
-  }
-  encryptedData?: {
-    ciphertext: string
-    dataToEncryptHash: string
-  }
-}
 
 // Define standard tags for our application
 const APP_TAGS = {
@@ -64,6 +30,51 @@ interface NFTSearchResult {
   url: string
 }
 
+// Create a client-side wrapper for Irys upload functionality
+const uploadToIrys = async (file: File): Promise<string> => {
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch('/api/upload-to-irys', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to upload to Irys');
+    }
+
+    const { url } = await response.json();
+    return url;
+
+  } catch (error) {
+    console.error('Irys upload error:', error);
+    throw error;
+  }
+};
+
+interface DynamicNFTMetadata {
+  name: string
+  description: string
+  image: string
+  attributes: {
+    trait_type: string
+    value: string | number
+  }[]
+  properties: {
+    files: {
+      uri: string
+      type: string
+    }[]
+    category: string
+  }
+  encryptedData?: {
+    ciphertext: string
+    dataToEncryptHash: string
+  }
+}
+
 /**
  * Creates a dynamic NFT with metadata stored on Irys and optional encrypted data
  * @param metadata NFT metadata
@@ -82,30 +93,20 @@ export async function createDynamicNFT(
 ) {
   try {
     showToast.info('Creating', 'Preparing dynamic NFT...')
-    const irys = await getIrysUploader()
 
-    // Step 1: Upload image to Irys with enhanced tags
+    // Step 1: Upload image to Irys using the new function
     showToast.info('Uploading', 'Uploading image to Irys...')
-    const imageReceipt = await irys.uploadFile(imageFile, {
-      tags: [
-        APP_TAGS.APPLICATION_ID,
-        APP_TAGS.VERSION,
-        { name: 'Content-Type', value: imageFile.type },
-        { name: 'File-Name', value: imageFile.name },
-        { name: 'Asset-Type', value: 'image' },
-        { name: 'NFT-Type', value: 'primary' }
-      ]
-    })
+    const imageUrl = await uploadToIrys(imageFile)
 
     // Step 2: Update metadata with image URL
     const updatedMetadata = {
       ...metadata,
-      image: `https://gateway.irys.xyz/${imageReceipt.id}`,
+      image: imageUrl,
       properties: {
         ...metadata.properties,
         files: [
           {
-            uri: `https://gateway.irys.xyz/${imageReceipt.id}`,
+            uri: imageUrl,
             type: imageFile.type
           }
         ]
@@ -115,22 +116,11 @@ export async function createDynamicNFT(
     // Step 3: Handle content based on storage method
     if (encryptedContent) {
       if (useProgrammableData) {
-        // Upload content to Irys for Programmable Data with enhanced tags
-        const contentReceipt = await irys.uploadFile(
-          new File([encryptedContent], 'content.txt', { type: 'text/plain' }),
-          {
-            tags: [
-              APP_TAGS.APPLICATION_ID,
-              APP_TAGS.VERSION,
-              { name: 'Content-Type', value: 'text/plain' },
-              { name: 'Asset-Type', value: 'programmable-data' },
-              { name: 'Storage-Type', value: 'programmable' },
-              { name: 'NFT-Type', value: 'content' }
-            ]
-          }
-        )
+        // Upload content to Irys for Programmable Data
+        const contentFile = new File([encryptedContent], 'content.txt', { type: 'text/plain' })
+        const contentUrl = await uploadToIrys(contentFile)
         updatedMetadata.properties.files.push({
-          uri: `https://gateway.irys.xyz/${contentReceipt.id}`,
+          uri: contentUrl,
           type: 'text/plain'
         })
       } else {
@@ -140,29 +130,17 @@ export async function createDynamicNFT(
       }
     }
 
-    // Step 4: Upload metadata to Irys with enhanced tags and mutable reference
+    // Step 4: Upload metadata to Irys
     showToast.info('Uploading', 'Uploading metadata to Irys...')
     const metadataString = JSON.stringify(updatedMetadata)
     const metadataFile = new File([metadataString], 'metadata.json', { type: 'application/json' })
-    
-    const metadataReceipt = await irys.uploadFile(metadataFile, {
-      tags: [
-        APP_TAGS.APPLICATION_ID,
-        APP_TAGS.VERSION,
-        { name: 'Content-Type', value: 'application/json' },
-        { name: 'File-Name', value: 'metadata.json' },
-        { name: 'Asset-Type', value: 'metadata' },
-        { name: 'NFT-Type', value: 'metadata' },
-        { name: 'Mutable', value: 'true' },
-        { name: 'Created-At', value: new Date().toISOString() }
-      ]
-    })
+    const metadataUrl = await uploadToIrys(metadataFile)
 
     showToast.success('Success', 'Dynamic NFT created successfully!')
     return {
-      txId: metadataReceipt.id,
-      metadataUrl: `https://gateway.irys.xyz/mutable/${metadataReceipt.id}`,
-      imageUrl: `https://gateway.irys.xyz/${imageReceipt.id}`
+      txId: metadataUrl,
+      metadataUrl: metadataUrl,
+      imageUrl: imageUrl
     }
   } catch (error) {
     console.error('Failed to create dynamic NFT:', error)
@@ -190,7 +168,6 @@ export async function updateDynamicNFT(
 ) {
   try {
     showToast.info('Updating', 'Preparing NFT update...')
-    const irys = await getIrysUploader()
 
     // Step 1: Fetch existing metadata
     const response = await fetch(`https://gateway.irys.xyz/${rootTxId}`)
@@ -199,27 +176,15 @@ export async function updateDynamicNFT(
     // Step 2: Handle content based on storage method
     if (encryptedContent) {
       if (useProgrammableData) {
-        // Upload content to Irys for Programmable Data with enhanced tags
-        const contentReceipt = await irys.uploadFile(
-          new File([encryptedContent], 'content.txt', { type: 'text/plain' }),
-          {
-            tags: [
-              APP_TAGS.APPLICATION_ID,
-              APP_TAGS.VERSION,
-              { name: 'Content-Type', value: 'text/plain' },
-              { name: 'Asset-Type', value: 'programmable-data' },
-              { name: 'Storage-Type', value: 'programmable' },
-              { name: 'NFT-Type', value: 'content' },
-              { name: 'Update-Of', value: rootTxId }
-            ]
-          }
-        )
+        // Upload content to Irys for Programmable Data
+        const contentFile = new File([encryptedContent], 'content.txt', { type: 'text/plain' })
+        const contentUrl = await uploadToIrys(contentFile)
         newMetadata.properties = {
           ...newMetadata.properties,
           files: [
             ...(newMetadata.properties?.files || []),
             {
-              uri: `https://gateway.irys.xyz/${contentReceipt.id}`,
+              uri: contentUrl,
               type: 'text/plain'
             }
           ]
@@ -246,24 +211,11 @@ export async function updateDynamicNFT(
     const metadataString = JSON.stringify(updatedMetadata)
     const metadataFile = new File([metadataString], 'metadata.json', { type: 'application/json' })
     
-    const receipt = await irys.uploadFile(metadataFile, {
-      tags: [
-        APP_TAGS.APPLICATION_ID,
-        APP_TAGS.VERSION,
-        { name: 'Content-Type', value: 'application/json' },
-        { name: 'File-Name', value: 'metadata.json' },
-        { name: 'Asset-Type', value: 'metadata' },
-        { name: 'NFT-Type', value: 'metadata' },
-        { name: 'Mutable', value: 'true' },
-        { name: 'Root-TX', value: rootTxId },
-        { name: 'Updated-At', value: new Date().toISOString() },
-        { name: 'Update-Type', value: 'metadata' }
-      ]
-    })
+    const receipt = await uploadToIrys(metadataFile)
 
     showToast.success('Success', 'Dynamic NFT updated successfully!')
     return {
-      txId: receipt.id,
+      txId: receipt,
       metadataUrl: `https://gateway.irys.xyz/mutable/${rootTxId}`
     }
   } catch (error) {
@@ -332,7 +284,6 @@ export async function fetchDynamicNFTMetadata(
 export async function searchNFTs(criteria: NFTSearchCriteria): Promise<NFTSearchResult[]> {
   try {
     showToast.info('Searching', 'Searching for NFTs...')
-    const irys = await getIrysUploader()
 
     // Build tag filters
     const tagFilters = []
@@ -380,21 +331,25 @@ export async function searchNFTs(criteria: NFTSearchCriteria): Promise<NFTSearch
     }
 
     // Execute search query
-    const results = await irys.search({
-      tags: tagFilters,
-      from: criteria.startDate?.toISOString(),
-      to: criteria.endDate?.toISOString(),
-      limit: criteria.limit || 50,
-      offset: criteria.offset || 0
+    const results = await fetch(`https://gateway.irys.xyz/search`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        tags: tagFilters,
+        from: criteria.startDate?.toISOString(),
+        to: criteria.endDate?.toISOString(),
+        limit: criteria.limit || 50,
+        offset: criteria.offset || 0
+      })
     })
 
-    // Transform results
-    const searchResults: NFTSearchResult[] = results.map(tx => ({
-      id: tx.id,
-      tags: tx.tags,
-      timestamp: tx.timestamp,
-      url: `https://gateway.irys.xyz/${tx.id}`
-    }))
+    if (!results.ok) {
+      throw new Error('Failed to search NFTs')
+    }
+
+    const searchResults: NFTSearchResult[] = await results.json()
 
     showToast.success('Success', `Found ${searchResults.length} NFTs`)
     return searchResults

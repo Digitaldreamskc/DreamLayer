@@ -18,7 +18,7 @@ export default function EventsPage() {
               </h1>
               <div className="w-32 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent mx-auto animate-pulse mb-8" />
               <p className="text-xl md:text-2xl text-white/70 font-light max-w-3xl mx-auto leading-relaxed">
-                Join exclusive Web3 events, earn DETs, and connect with the community
+                Join exclusive Web3 events, earn rewards, and connect with the community
               </p>
             </div>
 
@@ -42,7 +42,7 @@ export default function EventsPage() {
                   <div className="space-y-3">
                     <div className="flex justify-between items-center text-sm">
                       <span className="text-white/40">Date</span>
-                      <span className="text-white/70 font-mono">June 1, 2025</span>
+                      <span className="text-white/70 font-mono">June 10, 2025</span>
                     </div>
                     <div className="flex justify-between items-center text-sm">
                       <span className="text-white/40">Location</span>
@@ -138,7 +138,7 @@ export default function EventsPage() {
             <div className="mt-16 text-center">
               <div className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-3xl p-8">
                 <h3 className="text-2xl font-bold text-white mb-4">Connect to Participate</h3>
-                <p className="text-white/70 mb-6">Connect your wallet to check into events and claim DETs</p>
+                <p className="text-white/70 mb-6">Connect your wallet to check into events and claim rewards</p>
                 <button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white px-8 py-3 rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
                   Connect Wallet
                 </button>
