@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
-import { useChainId, useSwitchChain } from 'wagmi'
 import { useAccount } from 'wagmi'
+import { useChainId, useSwitchChain } from 'wagmi/hooks'
 import { StoryClient } from '@story-protocol/core-sdk'
 import { createPublicClient, http } from 'viem'
 import { showToast } from '@/utils/toast'
@@ -14,10 +14,9 @@ import { supabase } from '@/lib/supabaseClient'
 const STORY_CHAIN_ID = 1315
 
 export function useMintNFT() {
-  const { address } = useAccount()
+  const { address, chain } = useAccount()
   const chainId = useChainId()
   const { switchChain } = useSwitchChain()
-  const { chain } = useAccount()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 

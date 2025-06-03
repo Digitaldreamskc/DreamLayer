@@ -76,3 +76,4 @@ export async function uploadMetadataToIPFS(metadata: object) {
     throw new Error(errorMessage)
   }
 }
+export const uploadToIPFS = uploadToIrys
