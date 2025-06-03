@@ -1,54 +1,31 @@
-﻿"use client";
+﻿'use client';
 
-import { useAccount, useConnect, useDisconnect } from "wagmi";
-import { useEffect, useState } from "react";
+import { useAccount, useConnect, useDisconnect } from 'wagmi';
+import { injected } from 'wagmi/connectors';
+import { Wallet } from 'lucide-react';
 
-export default function ConnectWalletButton() {
+export default function ConnectWallet() {
     const { address, isConnected } = useAccount();
-    const { connect, connectors } = useConnect();
+    const { connect } = useConnect({
+        connector: injected(),
+    });
     const { disconnect } = useDisconnect();
-    const [mounted, setMounted] = useState(false);
 
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    // Prevent hydration mismatch by showing nothing until mounted
-    if (!mounted) {
-        return (
-            <div className="px-6 py-3 text-sm font-light bg-gradient-to-r from-blue-500/80 to-purple-500/80 backdrop-blur-sm border border-white/20 text-white rounded-lg opacity-50">
-                Loading...
-            </div>
-        );
-    }
-
-    if (isConnected) {
-        return (
-            <div className="flex items-center gap-3">
-                <span className="text-sm text-white/80 font-light">
-                    {address?.slice(0, 6)}...{address?.slice(-4)}
-                </span>
-                <button
-                    onClick={() => disconnect()}
-                    className="px-4 py-2 text-sm font-light bg-red-500/80 backdrop-blur-sm border border-white/20 text-white rounded-lg hover:bg-red-500 transition-all duration-300"
-                >
-                    Disconnect
-                </button>
-            </div>
-        );
-    }
-
-    return (
-        <div className="flex gap-2">
-            {connectors.map((connector) => (
-                <button
-                    key={connector.uid}
-                    onClick={() => connect({ connector })}
-                    className="px-6 py-3 text-sm font-light bg-gradient-to-r from-blue-500/80 to-purple-500/80 backdrop-blur-sm border border-white/20 text-white rounded-lg hover:from-blue-500 hover:to-purple-500 transition-all duration-300"
-                >
-                    Connect {connector.name}
-                </button>
-            ))}
-        </div>
+    return isConnected && address ? (
+        <button
+            onClick={disconnect}
+            className="px-4 py-2 rounded-xl bg-white/10 border border-white/20 text-white flex items-center gap-2"
+        >
+            <Wallet size={16} />
+            {address.slice(0, 6)}...{address.slice(-4)}
+        </button>
+    ) : (
+        <button
+            onClick={() => connect()}
+            className="px-6 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:opacity-90 transition-all flex items-center gap-2"
+        >
+            <Wallet size={16} />
+            Connect Wallet
+        </button>
     );
 }
