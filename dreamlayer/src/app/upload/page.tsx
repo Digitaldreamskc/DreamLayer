@@ -10,7 +10,7 @@ import { uploadToIPFS } from '@/services/ipfsService';
 
 export default function UploadPage() {
   const router = useRouter();
-  
+
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -48,9 +48,9 @@ export default function UploadPage() {
     setIsLoading(true);
 
     try {
-      const result = await uploadToIPFS(file);
-      
-      setIpfsUrl(result.url);
+      const url = await uploadToIPFS(file);
+
+      setIpfsUrl(url);
       setSuccess('File successfully uploaded to IPFS!');
       showToast.success('Upload Successful', 'Your file was uploaded to IPFS');
     } catch (err) {
@@ -67,17 +67,17 @@ export default function UploadPage() {
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-gray-900 to-slate-950 relative overflow-hidden">
         <AnimatedBackground />
         <Navbar />
-        
+
         <main className="pt-20 relative z-10">
           <div className="container mx-auto px-4 py-8">
             <h1 className="text-5xl font-bold mb-8 text-white text-center">Upload Asset to IPFS</h1>
-            
+
             <div className="max-w-2xl mx-auto bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-3xl p-8">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium mb-2 text-white">File</label>
                   <div className="flex flex-col items-center justify-center w-full">
-                    <label 
+                    <label
                       className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 rounded-xl cursor-pointer bg-white/[0.03] hover:bg-white/[0.05] transition-colors"
                     >
                       <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -89,22 +89,22 @@ export default function UploadPage() {
                         </p>
                         <p className="text-xs text-white/60">SVG, PNG, JPG, GIF, MP4, PDF (MAX. 10MB)</p>
                       </div>
-                      <input 
-                        id="dropzone-file" 
-                        type="file" 
-                        className="hidden" 
+                      <input
+                        id="dropzone-file"
+                        type="file"
+                        className="hidden"
                         onChange={handleFileChange}
                         required
                       />
                     </label>
                   </div>
-                  
+
                   {previewUrl && (
                     <div className="mt-4 relative">
                       <div className="relative w-full h-48 overflow-hidden rounded-xl">
-                        <img 
-                          src={previewUrl} 
-                          alt="Preview" 
+                        <img
+                          src={previewUrl}
+                          alt="Preview"
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -113,7 +113,7 @@ export default function UploadPage() {
                       </div>
                     </div>
                   )}
-                  
+
                   {file && !previewUrl && (
                     <div className="mt-4 p-4 border border-white/10 rounded-xl bg-white/[0.05]">
                       <p className="text-sm text-white/80">
@@ -135,9 +135,9 @@ export default function UploadPage() {
                     {ipfsUrl && (
                       <div>
                         <p className="font-semibold mt-2">IPFS URL:</p>
-                        <a 
-                          href={ipfsUrl} 
-                          target="_blank" 
+                        <a
+                          href={ipfsUrl}
+                          target="_blank"
                           rel="noopener noreferrer"
                           className="text-blue-300 underline break-all"
                         >
@@ -148,8 +148,8 @@ export default function UploadPage() {
                   </div>
                 )}
 
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   disabled={isLoading || !file}
                   className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:opacity-90 text-white py-4 rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed"
                 >
@@ -163,9 +163,9 @@ export default function UploadPage() {
                     </div>
                   ) : 'Upload to IPFS'}
                 </button>
-                
+
                 <div className="pt-4 border-t border-white/10">
-                  <button 
+                  <button
                     type="button"
                     onClick={() => router.push('/vision')}
                     className="w-full bg-white/10 hover:bg-white/20 text-white py-3 rounded-xl font-semibold transition-all"

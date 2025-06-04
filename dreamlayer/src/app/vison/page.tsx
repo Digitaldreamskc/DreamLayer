@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useMintNFT } from '@/hooks/useMintNFT';
-import { useNetwork, useSwitchNetwork } from 'wagmi';
+import { useChainId, useSwitchChain, useAccount } from 'wagmi';
 import Navbar from '@/components/Navbar';
 import AnimatedBackground from '@/components/AnimatedBackground';
 import { showToast } from '@/utils/toast';
@@ -15,8 +15,9 @@ const STORY_CHAIN_ID = 1315;
 export default function RegisterMintPage() {
   const router = useRouter();
   const { mint, isLoading, error: mintError } = useMintNFT();
-  const { chain } = useNetwork();
-  const { switchNetwork } = useSwitchNetwork();
+  const chainId = useChainId();
+  const { switchChain } = useSwitchChain();
+  const { chain } = useAccount();
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -27,10 +28,10 @@ export default function RegisterMintPage() {
 
   // Check network on mount
   useEffect(() => {
-    if (chain?.id !== STORY_CHAIN_ID) {
+    if (chainId !== STORY_CHAIN_ID) {
       showToast.info('Network Required', 'Please switch to Story Protocol Aeneid Testnet');
     }
-  }, [chain?.id]);
+  }, [chainId]);
 
   // Handle file selection and preview
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,7 +74,7 @@ export default function RegisterMintPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate form
     if (!file) {
       setError('Please select a file to upload');
@@ -94,9 +95,9 @@ export default function RegisterMintPage() {
     }
 
     // Check network
-    if (chain?.id !== STORY_CHAIN_ID) {
+    if (chainId !== STORY_CHAIN_ID) {
       try {
-        await switchNetwork?.(STORY_CHAIN_ID);
+        await switchChain({ chainId: STORY_CHAIN_ID });
         showToast.info('Switching Network', 'Please wait while we switch to Story Protocol Aeneid Testnet');
         return; // Return here as the network switch will trigger a re-render
       } catch (error) {
@@ -110,16 +111,16 @@ export default function RegisterMintPage() {
 
     try {
       const result = await mint(file, { title, description });
-      
+
       setSuccess('Your IP was successfully registered and minted!');
       showToast.success('Success!', 'Your IP was successfully registered on Story Protocol');
-      
+
       // Clear form after successful submission
       setTitle('');
       setDescription('');
       setFile(null);
       setPreviewUrl(null);
-      
+
       // Redirect after success
       setTimeout(() => router.push('/vision'), 3000);
     } catch (err) {
@@ -134,13 +135,13 @@ export default function RegisterMintPage() {
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-gray-900 to-slate-950 relative overflow-hidden">
         <AnimatedBackground />
         <Navbar />
-      
+
       <main className="pt-20 relative z-10">
         <div className="container mx-auto px-4 py-8">
           <h1 className="text-5xl font-bold mb-8 text-white text-center">Register & Mint IP</h1>
-          
+
           <div className="max-w-2xl mx-auto bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-3xl p-8">
-            {chain?.id !== STORY_CHAIN_ID && (
+            {chainId !== STORY_CHAIN_ID && (
               <div className="mb-6 p-4 rounded-xl bg-yellow-500/20 border border-yellow-500/30 text-yellow-300 text-sm">
                 Please switch to Story Protocol Aeneid Testnet to register your IP
               </div>
@@ -174,7 +175,7 @@ export default function RegisterMintPage() {
               <div>
                 <label className="block text-sm font-medium mb-2 text-white">File</label>
                 <div className="flex flex-col items-center justify-center w-full">
-                  <label 
+                  <label
                     className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 rounded-xl cursor-pointer bg-white/[0.03] hover:bg-white/[0.05] transition-colors"
                   >
                     <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -186,22 +187,22 @@ export default function RegisterMintPage() {
                       </p>
                       <p className="text-xs text-white/60">SVG, PNG, JPG, GIF, MP4, PDF (MAX. 10MB)</p>
                     </div>
-                    <input 
-                      id="dropzone-file" 
-                      type="file" 
-                      className="hidden" 
+                    <input
+                      id="dropzone-file"
+                      type="file"
+                      className="hidden"
                       onChange={handleFileChange}
                       required
                     />
                   </label>
                 </div>
-                
+
                 {previewUrl && (
                   <div className="mt-4 relative">
                     <div className="relative w-full h-48 overflow-hidden rounded-xl">
-                      <img 
-                        src={previewUrl} 
-                        alt="Preview" 
+                      <img
+                        src={previewUrl}
+                        alt="Preview"
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -210,7 +211,7 @@ export default function RegisterMintPage() {
                     </div>
                   </div>
                 )}
-                
+
                 {file && !previewUrl && (
                   <div className="mt-4 p-4 border border-white/10 rounded-xl bg-white/[0.05]">
                     <p className="text-sm text-white/80">
@@ -232,9 +233,9 @@ export default function RegisterMintPage() {
                 </div>
               )}
 
-              <button 
-                type="submit" 
-                disabled={isLoading || chain?.id !== STORY_CHAIN_ID}
+              <button
+                type="submit"
+                disabled={isLoading || chainId !== STORY_CHAIN_ID}
                 className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white py-4 rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
@@ -245,7 +246,7 @@ export default function RegisterMintPage() {
                     </svg>
                     Processing...
                   </div>
-                ) : chain?.id !== STORY_CHAIN_ID ? 'Switch Network to Continue' : 'Register & Mint'}
+                ) : chainId !== STORY_CHAIN_ID ? 'Switch Network to Continue' : 'Register & Mint'}
               </button>
             </form>
           </div>
