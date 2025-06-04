@@ -3,16 +3,19 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
-interface SliderProps extends React.HTMLAttributes<HTMLDivElement> {
+interface SliderProps {
     value?: number[]
     defaultValue?: number[]
+    className?: string
     min?: number
     max?: number
     step?: number
     onValueChange?: (value: number[]) => void
 }
 
-const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
+type SliderPropsWithHTMLProps = SliderProps & Omit<React.HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'value' | 'onChange'>
+
+const Slider = React.forwardRef<HTMLDivElement, SliderPropsWithHTMLProps>(
     ({ className, min = 0, max = 100, step = 1, value, defaultValue, onValueChange, ...props }, ref) => {
         const [values, setValues] = React.useState<number[]>(value || defaultValue || [min])
         const trackRef = React.useRef<HTMLDivElement>(null)
