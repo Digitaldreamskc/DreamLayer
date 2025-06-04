@@ -6,9 +6,7 @@ import { Wallet } from 'lucide-react';
 
 export default function ConnectWalletButton() {
     const { address, isConnected } = useAccount();
-    const { connect } = useConnect({
-        connector: injected(),
-    });
+    const { connect } = useConnect();
     const { disconnect } = useDisconnect();
 
     return isConnected && address ? (
@@ -21,7 +19,7 @@ export default function ConnectWalletButton() {
         </button>
     ) : (
         <button
-            onClick={() => connect()}
+            onClick={() => connect({ connector: injected() })}
             className="px-6 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:opacity-90 transition-all flex items-center gap-2"
         >
             <Wallet size={16} />
