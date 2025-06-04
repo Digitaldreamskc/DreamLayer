@@ -89,7 +89,7 @@ const Slider = React.forwardRef<HTMLDivElement, SliderPropsWithHTMLProps>(
                 {values.map((value, index) => (
                     <div
                         key={index}
-                        ref={(el) => (thumbRefs.current[index] = el)}
+                        ref={(el) => { thumbRefs.current[index] = el; }}
                         className="absolute h-5 w-5 rounded-full border-2 border-primary shadow-lg bg-gradient-to-br from-[#0ea5e9] via-[#818cf8] to-[#9333ea] hover:scale-105 transition-transform ring-2 ring-primary/30 cursor-pointer"
                         style={{
                             left: `calc(${((value - min) / (max - min)) * 100}% - 0.5rem)`,
