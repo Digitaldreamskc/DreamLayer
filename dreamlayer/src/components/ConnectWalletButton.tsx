@@ -11,7 +11,7 @@ export default function ConnectWalletButton() {
 
     return isConnected && address ? (
         <button
-            onClick={disconnect}
+            onClick={() => disconnect()}
             className="px-4 py-2 rounded-xl bg-white/10 border border-white/20 text-white flex items-center gap-2"
         >
             <Wallet size={16} />
