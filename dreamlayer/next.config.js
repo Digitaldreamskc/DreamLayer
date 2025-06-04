@@ -40,11 +40,6 @@ const nextConfig = {
 
     return config;
   },
-  
-  experimental: {
-    esmExternals: 'loose',
-  },
-
   // Handle CSS issues
   transpilePackages: [
     '@solana/web3.js',
