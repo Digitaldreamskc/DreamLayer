@@ -1,0 +1,64 @@
+{
+  "events": [
+    {
+      "id": "genesis-gathering-2025",
+      "name": "DreamLayer Genesis Gathering",
+      "description": "The inaugural DreamLayer event bringing together creators, learners, and dreamers. Earn your DET by participating, sharing, and showing up in the new frontier of decentralized imagination.",
+      "date": "2025-06-08",
+      "time": "18:00",
+      "location": {
+        "address": "1501 W 12th St, Kansas City, MO 64102",
+        "name": "Kansas City Convention Center",
+        "coordinates": {
+          "lat": 39.099712,
+          "lng": -94.595712
+        }
+      },
+      "det": {
+        "enabled": true,
+        "maxClaims": 500,
+        "verificationMethods": ["location", "qr", "social"],
+        "metadata": {
+          "image": "https://images.unsplash.com/photo-1559223607-b4d0555ae73c?w=400&h=400&fit=crop",
+          "animation_url": null,
+          "attributes": [
+            {
+              "trait_type": "Event Type",
+              "value": "Genesis Gathering"
+            },
+            {
+              "trait_type": "Location",
+              "value": "Kansas City, MO"
+            },
+            {
+              "trait_type": "Date",
+              "value": "June 8, 2025"
+            },
+            {
+              "trait_type": "Rarity",
+              "value": "Founding Member"
+            },
+            {
+              "trait_type": "Network",
+              "value": "Solana"
+            }
+          ]
+        }
+      },
+      "status": "upcoming",
+      "category": "community",
+      "tags": ["genesis", "founding", "community", "web3", "kansas-city"],
+      "organizer": {
+        "name": "DreamLayer Team",
+        "contact": "events@dreamlayer.io"
+      },
+      "capacity": 500,
+      "price": "free",
+      "requirements": ["wallet_connection", "location_verification"],
+      "social": {
+        "hashtags": ["#DreamLayerGenesis", "#Web3KC", "#DETClaim"],
+        "shareText": "Join me at the DreamLayer Genesis Gathering! Claim your founding member DET 🚀"
+      }
+    }
+  ]
+}

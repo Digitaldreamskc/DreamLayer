@@ -1,0 +1,64 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+.vscode
+.idea
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# Hardhat files
+cache
+artifacts
+typechain-types
+
+# Compiler files
+cache/
+out/
+
+# Logs
+logs
+*.log
+
+# Local development
+*.dev.js
+
+# DynamicNFT deployment addresses
+.contract-addresses.json
+
+# Python virtual environment
+venv/
+__pycache__/
+*.pyc
+
+# Database
+*.sqlite
+*.sqlite3

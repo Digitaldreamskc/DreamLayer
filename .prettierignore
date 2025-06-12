@@ -1,0 +1,12 @@
+.next
+node_modules
+public
+coverage
+build
+dist
+*.lock
+.vercel
+.env*
+.git
+.husky
+.vscode
