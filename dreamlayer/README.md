@@ -1,17 +1,31 @@
-# DreamLayer
+# 🌌 DreamLayer
 
+<<<<<<< HEAD
 A Next.js application for managing and interacting with digital assets on the blockchain.
+=======
+DreamLayer is a modular Next.js Web3 application built for managing and interacting with digital assets on the blockchain. Designed for humans and communities, it attempts to simplify Web3 onboarding while offering powerful tools for Dynamic NFT utility, human wallet identity, and token-powered participation.
+>>>>>>> 873432cf06e39832c9b6788567748de3921d5027
 
-## Features
+---
 
+<<<<<<< HEAD
 - Wallet connection and authentication
 - NFT management with Dynamic NFT support
 - Digital asset tracking
 - Web3 integration
 - Smart contract integration with Hardhat
+=======
+## ✨ Features
+>>>>>>> 873432cf06e39832c9b6788567748de3921d5027
 
-## Tech Stack
+- 🔐 Wallet connection & authentication (Reown, Phantom, & more)
+- 🖼️ NFT management & metadata access
+- 🧭 Digital asset tracking and activity logs
+- 🧩 IP registration and on-chain content linking
+- 🔗 Web3 integrations with Story Protocol, POAP, and QuickNode
+- ⚡ Optimized for Solana + EVM chains
 
+<<<<<<< HEAD
 - Next.js 14
 - React 18
 - Solana Web3.js
@@ -36,24 +50,33 @@ Key technical notes:
 - Uses OpenZeppelin v5.3.0 contracts
 - Implements proper token existence checks using `_ownerOf`
 - Solidity version ^0.8.20
+=======
+---
+>>>>>>> 873432cf06e39832c9b6788567748de3921d5027
 
-## Development
+## 🛠 Tech Stack
 
+<<<<<<< HEAD
 ### Frontend
 ```bash
 # Install dependencies
 npm install
+=======
+Layer                                    	Tech Used
+>>>>>>> 873432cf06e39832c9b6788567748de3921d5027
 
-# Run development server
-npm run dev
+Frontend	                             React 18, Next.js 14
+Blockchain                             	Solana Web3.js, 
+Styling	                               TailwindCSS, PostCSS
+Language	                                  TypeScript
+Tooling	                             pnpm, ESLint, GitHub Actions
+Integrations	                   Story Protocol, POAP, QuickNode RPC
 
-# Build for production
-npm run build
+---
 
-# Start production server
-npm start
-```
+## 🚀 Getting Started
 
+<<<<<<< HEAD
 ### Smart Contracts
 ```bash
 # Compile contracts
@@ -133,3 +156,9 @@ To learn more about Next.js, take a look at the following resources:
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+=======
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/Digitaldreamskc/DreamLayer.git
+   cd DreamLayer
+>>>>>>> 873432cf06e39832c9b6788567748de3921d5027
