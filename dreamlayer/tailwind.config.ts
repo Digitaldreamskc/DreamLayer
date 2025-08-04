@@ -26,12 +26,23 @@ const config: Config = {
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         destructive: 'hsl(var(--destructive))',
-        primary: {
-          500: '#3B82F6',
-        },
-        accent: {
-          500: '#8B5CF6',
-        },
+        'destructive-foreground': 'hsl(var(--destructive-foreground))',
+        card: 'hsl(var(--card))',
+        'card-foreground': 'hsl(var(--card-foreground))',
+        popover: 'hsl(var(--popover))',
+        'popover-foreground': 'hsl(var(--popover-foreground))',
+        primary: 'hsl(var(--primary))',
+        'primary-foreground': 'hsl(var(--primary-foreground))',
+        secondary: 'hsl(var(--secondary))',
+        'secondary-foreground': 'hsl(var(--secondary-foreground))',
+        muted: 'hsl(var(--muted))',
+        'muted-foreground': 'hsl(var(--muted-foreground))',
+        accent: 'hsl(var(--accent))',
+        'accent-foreground': 'hsl(var(--accent-foreground))',
+
+        // Your custom color palettes
+        'primary-500': '#3B82F6',
+        'accent-500': '#8B5CF6',
         cyber: {
           50: '#E6FBF9',
           500: '#14B8A6',
@@ -70,23 +81,5 @@ const config: Config = {
         'cyber-grid': 'radial-gradient(#14B8A6 0.5px, transparent 0.5px)',
       },
       animation: {
-        flicker: 'flicker 2s infinite ease-in-out',
-        float: 'float 6s ease-in-out infinite',
-      },
-      keyframes: {
-        flicker: {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.4' },
-        },
-        float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-8px)' },
-        },
-      },
-    },
-  },
-  plugins: [typography, forms],
-}
-
-export default config
+        flicker: 'flicker 2s
 
