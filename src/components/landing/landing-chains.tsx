@@ -1,15 +1,10 @@
-"use client";
+'use client';
 
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 
 export function LandingChains() {
   const chains = [
-    {
-      name: "Solana",
-      logo: "https://cryptologos.cc/logos/solana-sol-logo.png",
-      description: "Ultra-fast blockchain with low transaction fees for NFTs and DeFi.",
-    },
     {
       name: "Base",
       logo: "https://cryptologos.cc/logos/base-logo.png",
@@ -51,7 +46,7 @@ export function LandingChains() {
           </motion.p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {chains.map((chain, index) => (
             <motion.div 
               key={chain.name}
