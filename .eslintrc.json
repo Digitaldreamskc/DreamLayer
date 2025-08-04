@@ -1,0 +1,50 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    // Disable specific rules that might conflict with Next.js patterns
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+    "react/no-unescaped-entities": "off",
+    // Allow props spreading for components
+    "react/jsx-props-no-spreading": "off",
+    // Allow specific import patterns
+    "import/no-unresolved": "off",
+    // Less strict rules for props validation during development
+    "react/prop-types": "off",
+    // Handle async code properly
+    "@typescript-eslint/no-floating-promises": "off",
+    // Wallet-specific rules
+    "camelcase": ["error", { "properties": "never", "ignoreDestructuring": true }],
+    "no-console": ["warn", { "allow": ["warn", "error"] }]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "ignorePatterns": [
+    "node_modules/",
+    ".next/",
+    "out/",
+    "public/",
+    "**/*.d.ts"
+  ]
+}
