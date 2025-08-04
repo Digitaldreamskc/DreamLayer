@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Global variables accessible to Tailwind */
+/* Custom global color variables in HSL (used by Tailwind config) */
 :root {
   --background: 222.2 84% 4.9%;
   --foreground: 210 40% 98%;
@@ -26,7 +26,11 @@
   --radius: 0.5rem;
 }
 
+/* Base styles applied with Tailwind utility shortcuts */
 @layer base {
+  * {
+    @apply border-border;
+  }
   body {
     @apply bg-background text-foreground;
   }
