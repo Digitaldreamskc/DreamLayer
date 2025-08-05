@@ -7,7 +7,8 @@ import { LandingChains } from '@/components/landing/landing-chains';
 import { LandingCTA } from '@/components/landing/landing-cta';
 import { SiteHeader } from '@/components/landing/site-header';
 import { SiteFooter } from '@/components/landing/site-footer';
-import AnimatedBackground from '@/components/landing/animated-background';
+import AnimatedBackground from '@/components/AnimatedBackground';
+
 import { usePrivy } from '@privy-io/react-auth';
 
 export default function Home() {
