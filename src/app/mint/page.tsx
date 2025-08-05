@@ -122,7 +122,7 @@ export default function RegisterMintPage() {
       setPreviewUrl(null);
 
       // Redirect after success
-      setTimeout(() => router.push('/vision'), 3000);
+      setTimeout(() => router.push('/mint'), 3000);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to register IP';
       setError(errorMessage);
