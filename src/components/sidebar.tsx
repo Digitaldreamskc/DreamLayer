@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -26,8 +26,8 @@ const navItems = [
         icon: <Calendar className="h-4 w-4" />,
     },
     {
-        title: "Creators Studio", // previously "NFTs"
-        href: "/nfts",
+        title: "Creators Studio", // updated title
+        href: "/studio", // ✅ updated href from /nfts to /studio
         icon: <PaintBucket className="h-4 w-4" />,
     },
     {

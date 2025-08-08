@@ -1,5 +1,6 @@
 "use client";
 
+import { nftFormSchema, NFTFormData } from '@/lib/schemas/nftFormSchema';
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useWallet } from "@/lib/wallet";
@@ -30,10 +31,11 @@ const NFT_CONTRACT_ABI = [
 ];
 
 const CONTRACT_ADDRESSES = {
-    base: "0x..." // Replace with your Base contract address
+    base: "0xB41a95b8013a366Dd8f0adC57a6dD5b86cf0C68E"
+
 };
 
-const SOLANA_PROGRAM_ID = new PublicKey("..."); // Replace with your Solana program ID
+
 
 // Form schema definition remains the same...
 
@@ -99,7 +101,7 @@ export function NFTMinter() {
 
     const mintNFTOnBase = async (metadata: any, uri: string) => {
         try {
-            const provider = new ethers.BrowserProvider((window as any).ethereum);
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = await provider.getSigner();
             const contract = new ethers.Contract(
                 CONTRACT_ADDRESSES.base,

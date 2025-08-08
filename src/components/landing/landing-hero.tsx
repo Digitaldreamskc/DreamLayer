@@ -22,7 +22,7 @@ export function LandingHero() {
         >
           <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary mb-6">
             <Sparkles className="mr-2 h-3.5 w-3.5" />
-            Introducing LAYER - The Ultimate Web3 Platform
+            Introducing LAYER - A Dynamic Platform
           </div>
         </motion.div>
         
@@ -35,7 +35,7 @@ export function LandingHero() {
           <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent">
             Your Gateway to
           </span>
-          <span className="block">Web3 Experiences</span>
+          <span className="block">Experiences</span>
         </motion.h1>
         
         <motion.p 
@@ -44,7 +44,7 @@ export function LandingHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          Connect, create, and collect across Solana, Base, and Story Protocol.
+          Connect, create, and collect across Base, and Story Protocol.
           Mint dynamic NFTs, attend exclusive events, and learn Web3.
         </motion.p>
         

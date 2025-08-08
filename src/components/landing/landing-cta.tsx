@@ -24,7 +24,7 @@ export function LandingCTA() {
               transition={{ duration: 0.5, delay: 0.1 }}
               viewport={{ once: true }}
             >
-              Ready to Experience Web3?
+              Ready For A New Experience?
             </motion.h2>
             <motion.p 
               className="text-xl text-muted-foreground mb-10 max-w-lg mx-auto"

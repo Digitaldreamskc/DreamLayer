@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { injected, coinbaseWallet, walletConnect } from 'wagmi/connectors';
 import { Wallet } from 'lucide-react';
-import { 
+import {
     Dialog,
     DialogContent,
     DialogHeader,
@@ -19,33 +19,38 @@ export default function ConnectWalletButton() {
     const { disconnect } = useDisconnect();
     const [open, setOpen] = useState(false);
 
-    // Available connectors setup
+    // Define connectors with proper Wagmi v2 initialization
     const availableConnectors = [
         {
             id: 'injected',
             name: 'Browser Wallet',
             description: 'Connect to your MetaMask or other browser extension wallet',
             icon: '🦊',
-            connector: injected
+            connector: injected()
         },
         {
             id: 'walletConnect',
             name: 'WalletConnect',
             description: 'Connect with your mobile wallet using WalletConnect',
             icon: '📱',
-            connector: walletConnect
+            // WalletConnect requires a projectId - you need to get this from https://cloud.walletconnect.com
+            connector: walletConnect({
+                projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || 'your-project-id-here'
+            })
         },
         {
             id: 'coinbaseWallet',
             name: 'Coinbase Wallet',
             description: 'Connect to your Coinbase Wallet',
             icon: '🔷',
-            connector: coinbaseWallet
+            connector: coinbaseWallet({
+                appName: 'DreamLayer'
+            })
         }
     ];
 
-    const handleConnect = (connectorFn) => {
-        connect({ connector: connectorFn() });
+    const handleConnect = (connector) => {
+        connect({ connector });
         setOpen(false);
     };
 
@@ -77,7 +82,7 @@ export default function ConnectWalletButton() {
                             {error.message || "Failed to connect wallet"}
                         </div>
                     )}
-                    
+
                     <div className="grid gap-4">
                         {availableConnectors.map((item) => (
                             <button

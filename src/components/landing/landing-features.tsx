@@ -44,7 +44,7 @@ export function LandingFeatures() {
     {
       icon: <Wallet className="h-6 w-6 text-primary" />,
       title: "Multi-Chain Wallet",
-      description: "Seamlessly connect and manage assets across Solana, Base, and more with our integrated wallet.",
+      description: "Seamlessly connect and manage assets with our integrated wallet.",
     },
     {
       icon: <Calendar className="h-6 w-6 text-primary" />,
@@ -77,10 +77,10 @@ export function LandingFeatures() {
     <section className="container py-24">
       <div className="text-center mb-16">
         <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl mb-4">
-          Unlock the Full Potential of Web3
+          Unlock Your Full Potential 
         </h2>
         <p className="text-muted-foreground text-xl max-w-3xl mx-auto">
-          LAYER combines cutting-edge blockchain technologies to create a seamless Web3 experience
+          LAYER combines cutting-edge blockchain technologies to create a seamless dynamic experience
         </p>
       </div>
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
